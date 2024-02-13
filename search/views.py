@@ -1,9 +1,9 @@
-from watson import search as watson
 from watson.views import SearchView as WatsonSearchView
 
 
 class SearchView(WatsonSearchView):
-    template_name = "watson/search_results.html"
+    template_name = "search/results.html"
 
     def get_queryset(self):
-        return watson.search(self.query, models=self.get_models())
+        q = super().get_queryset()
+        return q

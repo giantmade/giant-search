@@ -18,9 +18,11 @@ class SearchAppConfig(AppConfig):
                         "adapter_cls": GiantSearchAdapter,
                     }
 
-                    # If the Model's Meta class has defined search_fields, pass them to the register method.
+                    # If the model defines which fields should be searchable, pass them to the register() call.
                     try:
-                        register_kwargs["fields"] = model.Meta.search_fields
+                        search_fields = model.get_search_fields()
+                        if search_fields:
+                            register_kwargs["fields"] = search_fields
                     except AttributeError:
                         pass
 
@@ -29,4 +31,4 @@ class SearchAppConfig(AppConfig):
 
         # Register Page Titles
         from cms.models import Title
-        watson.register(Title.objects.filter(publisher_is_draft=False), adapter_cls=GiantSearchAdapter)
+        watson.register(Title.objects.filter(published=True, publisher_is_draft=False), adapter_cls=GiantSearchAdapter)
