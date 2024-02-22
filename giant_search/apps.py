@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from watson import search as watson
+from giant_search.utils import register_for_search
 
 from search.adapter import GiantSearchAdapter
 
@@ -13,10 +13,7 @@ class SearchAppConfig(AppConfig):
             for model in app.values():
                 if hasattr(model, "is_searchable"):
                     # We have search_fields, try to register the model.
-                    register_kwargs = {
-                        "model": model.get_search_queryset(),
-                        "adapter_cls": GiantSearchAdapter,
-                    }
+                    register_kwargs = {"model": model.get_search_queryset()}
 
                     # If the model defines which fields should be searchable, pass them to the register() call.
                     try:
@@ -27,8 +24,8 @@ class SearchAppConfig(AppConfig):
                         pass
 
                     # Now we register this Model with the kwargs built up from above.
-                    watson.register(**register_kwargs)
+                    register_for_search(**register_kwargs)
 
         # Register Page Titles
         from cms.models import Title
-        watson.register(Title.objects.filter(published=True, publisher_is_draft=False), adapter_cls=GiantSearchAdapter)
+        register_for_search(Title.objects.filter(published=True, publisher_is_draft=False))
