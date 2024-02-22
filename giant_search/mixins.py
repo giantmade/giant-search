@@ -1,7 +1,5 @@
 from django.db.models import QuerySet
 
-from search.utils import is_page_title
-
 
 class SearchableMixin:
     @classmethod
