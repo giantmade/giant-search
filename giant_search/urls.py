@@ -1,8 +1,8 @@
 from django.urls import path
 
-from search import views
+from giant_search import views
 
-app_name = "search"
+app_name = "giant_search"
 
 urlpatterns = [
     path("", views.SearchView.as_view(), name="index"),
