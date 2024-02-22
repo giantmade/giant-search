@@ -1,11 +1,9 @@
 from django.apps import AppConfig
 from giant_search.utils import register_for_search
 
-from search.adapter import GiantSearchAdapter
 
-
-class SearchAppConfig(AppConfig):
-    name = "search"
+class GiantSearchAppConfig(AppConfig):
+    name = "giant_search"
 
     def ready(self) -> None:
         # Get a list of all models that implement the SearchableMixin?
