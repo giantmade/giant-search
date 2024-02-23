@@ -71,6 +71,12 @@ class GiantSearchAdapter(SearchAdapter):
 
         url = ""
 
+        # First, try to get the value from the object's get_absolute_url method.
+        try:
+            url = obj.get_absolute_url()
+        except AttributeError:
+            pass
+
         # If the model is a Django CMS Page Title model or a Plugin, try to get the URL from the Page.
         if is_page_title(obj) or is_cms_plugin(obj):
             try:
@@ -78,6 +84,7 @@ class GiantSearchAdapter(SearchAdapter):
             except AttributeError:
                 pass
 
+        # Finally, we check to see if the model has implemented search_result_url, and if so, use that.
         try:
             url = obj.search_result_url
         except AttributeError:
