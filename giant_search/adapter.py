@@ -24,7 +24,8 @@ class GiantSearchAdapter(SearchAdapter):
         You can access the title of the search entry as `entry.title` in your search results.
         """
 
-        title = ""
+        # As a starting point, use the model's string representation.
+        title = str(obj)
 
         # If the model is a Django CMS Page Title model use the title field.
         if is_page_title(obj):
