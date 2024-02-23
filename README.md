@@ -12,7 +12,7 @@ Install `giant-search` via your chosen Python dependency manager, `poetry`, `pip
 
 1. Add `watson` to `INSTALLED_APPS` in `settings.py`
 2. Add `giant-search` to `INSTALLED_APPS` in `settings.py`
-3. Add the search application URLs to your project's `urls.py`, for example: `path("search/", include("search.urls",
+3. Add the search application URLs to your project's `urls.py`, for example: `path("search/", include("giant_search.urls",
    namespace="search")),`
 
 ## Registering items as searchable
@@ -31,6 +31,31 @@ We provide a convenient mixin class, `SearchableMixin` that you can add to any m
 
 As a developer, there are several configuration options that you can define to customise what gets indexed, and the data
 that is presented in the search result listing:
+
+### Third party models
+
+While the `SearchableMixin` takes care of first party models, you usually can't implement this on third party models.
+However, you can still make them searchable.
+
+In one of your main apps (usually `core`), add a call to register the model. Here is an example:
+
+```python
+from django.apps import AppConfig
+
+from giant_search.utils import register_for_search
+
+class CoreAppConfig(AppConfig):
+   name = "core"
+   verbose_name = "Core"
+
+   def ready(self):
+      from third_party_library.models import ThirdPartyModel
+      register_for_search(ThirdPartyModel)
+```
+
+Third party models will always have their string representation set as the search result title. The model **must**
+implement the `get_absolute_url` method, otherwise, the search result will not have a valid URL and the model will be
+indexed, but will _not_ show up in search results.
 
 #### Overriding the search QuerySet
 
