@@ -5,7 +5,7 @@ from django.test import RequestFactory
 import pytest
 from watson import search
 
-from search.views import SearchView
+from giant_search.views import SearchView
 
 
 @pytest.mark.django_db
