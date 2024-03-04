@@ -1,13 +1,12 @@
 from watson.search import register
 
-from giant_search.adapter import GiantSearchAdapter
-
 
 def register_for_search(model, **field_overrides):
     """
     Registers a given model with Watson using the Giant Search Adapter.
     """
 
+    from giant_search.adapter import GiantSearchAdapter
     register(model, adapter_cls=GiantSearchAdapter, **field_overrides)
 
 
