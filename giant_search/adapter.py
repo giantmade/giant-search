@@ -39,7 +39,7 @@ class GiantSearchAdapter(SearchAdapter):
                 pass
 
         try:
-            title = obj.search_result_title
+            title = obj.get_search_search_result_title()
         except AttributeError:
             pass
 
@@ -56,11 +56,11 @@ class GiantSearchAdapter(SearchAdapter):
         """
 
         if is_page_title(obj):
-            # If the object is a Page Title, return right away since it can't implement search_result_description.
+            # If the object is a Page Title, return right away since it can't implement get_search_result_description.
             return obj.meta_description or ""
 
         try:
-            return obj.search_result_description
+            return obj.get_search_result_description()
         except AttributeError:
             return ""
 
@@ -84,9 +84,9 @@ class GiantSearchAdapter(SearchAdapter):
             except AttributeError:
                 pass
 
-        # Finally, we check to see if the model has implemented search_result_url, and if so, use that.
+        # Finally, we check to see if the model has implemented get_search_result_url, and if so, use that.
         try:
-            url = obj.search_result_url
+            url = obj.get_search_result_url()
         except AttributeError:
             pass
 
@@ -109,7 +109,7 @@ class GiantSearchAdapter(SearchAdapter):
             category = "Page"
 
         try:
-            category = obj.search_result_category
+            category = obj.get_search_result_category()
         except AttributeError:
             pass
 

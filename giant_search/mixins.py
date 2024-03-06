@@ -30,26 +30,23 @@ class SearchableMixin:
 
         return True
 
-    @property
-    def search_result_title(self) -> str:
+    def get_search_result_title(self) -> str:
         """
-        By default, search_result_title will return the string representation of the model as defined in __str__.
-        Override this property to provide a different search result title.
+        By default, get_search_result_title() will return the string representation of the model as defined in __str__.
+        Override this method to provide a different search result title.
         """
 
         return str(self)
 
-    @property
-    def search_result_description(self) -> str:
+    def get_search_result_description(self) -> str:
         """
-        By default, search_result_description returns an empty string. If you want to define a description, for example
-        if your model has a description field, you could override search_result_description to provide it.
+        By default, get_search_result_description() returns an empty string. If you want to define a description, for
+        example if your model has a description field, you could override get_search_result_description() to provide it.
         """
 
         return ""
 
-    @property
-    def search_result_url(self):
+    def get_search_result_url(self):
         """
         Define how to get the URL that the search result should point to.
 
@@ -64,8 +61,7 @@ class SearchableMixin:
             # Note that we will filter out any search results that don't have a valid URL because they're pointless.
             return ""
 
-    @property
-    def search_result_category(self) -> str:
+    def get_search_result_category(self) -> str:
         """
         By default, the search result category is the human readable name of the Model, but of course, you can override
         this by overriding this property method on your model.
