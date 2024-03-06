@@ -109,7 +109,7 @@ class GiantSearchAdapter(SearchAdapter):
             category = "Page"
 
         try:
-            category = obj.search_result_category
+            category = obj.get_search_result_category()
         except AttributeError:
             pass
 

@@ -61,8 +61,7 @@ class SearchableMixin:
             # Note that we will filter out any search results that don't have a valid URL because they're pointless.
             return ""
 
-    @property
-    def search_result_category(self) -> str:
+    def get_search_result_category(self) -> str:
         """
         By default, the search result category is the human readable name of the Model, but of course, you can override
         this by overriding this property method on your model.
