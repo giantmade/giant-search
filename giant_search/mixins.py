@@ -46,8 +46,7 @@ class SearchableMixin:
 
         return ""
 
-    @property
-    def search_result_url(self):
+    def get_search_result_url(self):
         """
         Define how to get the URL that the search result should point to.
 

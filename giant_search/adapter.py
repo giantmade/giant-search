@@ -84,9 +84,9 @@ class GiantSearchAdapter(SearchAdapter):
             except AttributeError:
                 pass
 
-        # Finally, we check to see if the model has implemented search_result_url, and if so, use that.
+        # Finally, we check to see if the model has implemented get_search_result_url, and if so, use that.
         try:
-            url = obj.search_result_url
+            url = obj.get_search_result_url()
         except AttributeError:
             pass
 
