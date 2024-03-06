@@ -2,6 +2,7 @@ import json
 from typing import final
 
 from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.html import strip_tags
 from watson.search import SearchAdapter
 
 from giant_search.utils import is_page_title, is_cms_plugin
@@ -43,7 +44,7 @@ class GiantSearchAdapter(SearchAdapter):
         except AttributeError:
             pass
 
-        return title[:1000]
+        return strip_tags(title[:1000])
 
     def get_description(self, obj):
         """
@@ -57,10 +58,10 @@ class GiantSearchAdapter(SearchAdapter):
 
         if is_page_title(obj):
             # If the object is a Page Title, return right away since it can't implement get_search_result_description.
-            return obj.meta_description or ""
+            return strip_tags(obj.meta_description) or ""
 
         try:
-            return obj.get_search_result_description()
+            return strip_tags(obj.get_search_result_description())
         except AttributeError:
             return ""
 
