@@ -38,11 +38,10 @@ class SearchableMixin:
 
         return str(self)
 
-    @property
-    def search_result_description(self) -> str:
+    def get_search_result_description(self) -> str:
         """
-        By default, search_result_description returns an empty string. If you want to define a description, for example
-        if your model has a description field, you could override search_result_description to provide it.
+        By default, get_search_result_description() returns an empty string. If you want to define a description, for
+        example if your model has a description field, you could override get_search_result_description() to provide it.
         """
 
         return ""

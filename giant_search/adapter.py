@@ -56,11 +56,11 @@ class GiantSearchAdapter(SearchAdapter):
         """
 
         if is_page_title(obj):
-            # If the object is a Page Title, return right away since it can't implement search_result_description.
+            # If the object is a Page Title, return right away since it can't implement get_search_result_description.
             return obj.meta_description or ""
 
         try:
-            return obj.search_result_description
+            return obj.get_search_result_description()
         except AttributeError:
             return ""
 
