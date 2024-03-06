@@ -39,7 +39,7 @@ class GiantSearchAdapter(SearchAdapter):
                 pass
 
         try:
-            title = obj.search_result_title
+            title = obj.get_search_search_result_title()
         except AttributeError:
             pass
 

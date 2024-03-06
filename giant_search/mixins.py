@@ -30,11 +30,10 @@ class SearchableMixin:
 
         return True
 
-    @property
-    def search_result_title(self) -> str:
+    def get_search_result_title(self) -> str:
         """
-        By default, search_result_title will return the string representation of the model as defined in __str__.
-        Override this property to provide a different search result title.
+        By default, get_search_result_title() will return the string representation of the model as defined in __str__.
+        Override this method to provide a different search result title.
         """
 
         return str(self)

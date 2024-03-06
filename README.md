@@ -109,17 +109,15 @@ class ExampleModel(SearchableMixin, models.Model):
     def __str__(self):
         return self.name
         
-    @property
-    def search_result_title(self) -> str:
+    def get_search_result_title(self) -> str:
         return str(self)
 
-    @property
-    def search_result_description(self) -> str:
+    def get_search_result_description(self) -> str:
         return self.summary
 
 ```
 
-The important parts in this example are `search_result_title` and `search_result_description`
+The important parts in this example are `get_search_result_title` and `get_search_result_description`
 
 Note that in this example, we don't define `search_result_url`. If you don't define `search_result_url` then Giant
 Search will call the `get_absolute_url` method on the model, if it has that method. If the model does not implement,
