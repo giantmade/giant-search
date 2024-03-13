@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load menu_tags static %}
+{% load menu_tags static show_pagination %}
 
 {% block title %}Search Results{% endblock %}
 
@@ -41,4 +41,5 @@
             {% endfor %}
         </div>
     </div>
+    {% show_pagination page_obj %}
 {% endblock %}

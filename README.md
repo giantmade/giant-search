@@ -131,6 +131,12 @@ Giant Search will call the `get_absolute_url` method on the model, if it has tha
 implement, `get_absolute_url` and does not implement `get_search_result_url` then it won't have a URL and will not be
 shown in the search results.
 
+### Pagination
+
+By default the search results will render 10 items per page. If you want to customise this simply add
+`GIANT_SEARCH_PAGINATE_BY` to your project's settings, along with the desired integer number of items to paginate by.
+This assumes your project has a registered simple_tag entitled `show_pagination` containing pagination logic. 
+
 ## Existing Data
 
 If implementing this library upon existing data, changes to search results will only take effect after the 
