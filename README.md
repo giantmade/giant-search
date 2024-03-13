@@ -11,7 +11,7 @@ Install `giant-search` via your chosen Python dependency manager, `poetry`, `pip
 ## Configuration
 
 1. Add `watson` to `INSTALLED_APPS` in `settings.py`
-2. Add `giant-search` to `INSTALLED_APPS` in `settings.py`
+2. Add `giant_search` to `INSTALLED_APPS` in `settings.py`
 3. Add the search application URLs to your project's `urls.py`, for example: `path("search/", include("giant_search.urls",
    namespace="search")),`
 
@@ -27,7 +27,8 @@ Page Extension and honour the setting within.
 
 ### Other models
 
-We provide a convenient mixin class, `SearchableMixin` that you can add to any model to allow it to be searched.
+We provide a convenient mixin class, `SearchableMixin` that you can add to any model to allow it to be searched. Don't 
+forget to add the import line `from giant_search.mixins import SearchableMixin` at the top of the models file.
 
 As a developer, there are several configuration options that you can define to customise what gets indexed, and the data
 that is presented in the search result listing:
@@ -73,6 +74,9 @@ If you want to define which fields on your model should be searched, you can imp
 your model like so:
 
 ```python
+from giant_search.mixins import SearchableMixin
+
+
 class ExampleModel(SearchableMixin, models.Model):
     name = models.CharField(max_length=255)
     content = models.CharField(max_legth=255)
@@ -101,6 +105,9 @@ model (remember, it must inherit from the `SearchableMixin`)
 Here is an example:
 
 ```python
+from giant_search.mixins import SearchableMixin
+
+
 class ExampleModel(SearchableMixin, models.Model):
     name = models.CharField(max_length=255)
     summary = models.CharField(max_length=255)
@@ -123,3 +130,8 @@ Note that in this example, we don't define `get_search_result_url`. If you don't
 Giant Search will call the `get_absolute_url` method on the model, if it has that method. If the model does not
 implement, `get_absolute_url` and does not implement `get_search_result_url` then it won't have a URL and will not be
 shown in the search results.
+
+## Existing Data
+
+If implementing this library upon existing data, changes to search results will only take effect after the 
+model instance is saved again.
