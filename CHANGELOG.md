@@ -1,3 +1,7 @@
+## 0.0.5
+### Added
+- Add customisable pagination option to search results via the GIANT_SEARCH_PAGINATE_BY settings variable.
+
 ## 0.0.4
 ### Fixed
 - Fix a typo in a call to the `get_search_result_title()` method which caused some search titles to be incorrect.
