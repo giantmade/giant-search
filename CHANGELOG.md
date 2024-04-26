@@ -1,3 +1,7 @@
+## 1.0.0
+### Changed
+- Major version bump to signal that this library is stable and ready for production.
+
 ## 0.0.5
 ### Added
 - Add customisable pagination option to search results via the GIANT_SEARCH_PAGINATE_BY settings variable.
