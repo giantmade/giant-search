@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "giant-search"
-version = "0.0.5"
+version = "1.0.0"
 description = "Provides a nice abstraction layer on top of the django-watson search library."
 authors = ["Scott Pashley <scott.pashley@giantdigital.co.uk>"]
 readme = "README.md"
