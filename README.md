@@ -131,6 +131,17 @@ Giant Search will call the `get_absolute_url` method on the model, if it has tha
 implement, `get_absolute_url` and does not implement `get_search_result_url` then it won't have a URL and will not be
 shown in the search results.
 
+If your model is a Django CMS Plugin instance, you probably want to implement `get_absolute_url()` and have it call
+`self.page.get_public_url()`.
+
+```python
+def get_absolute_url(self) -> str:
+    try:
+        return self.page.get_public_url()
+    except AttributeError:
+        return ""
+```
+
 ### Pagination
 
 By default the search results will render 10 items per page. If you want to customise this simply add

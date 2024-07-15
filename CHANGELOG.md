@@ -1,3 +1,8 @@
+## 1.0.1
+### Added
+Added a line in the documentation detailing how to implement a useful `get_absolute_url()` method for Django CMS plugin
+instances.
+
 ## 1.0.0
 ### Changed
 - Major version bump to signal that this library is stable and ready for production.
