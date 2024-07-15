@@ -132,8 +132,15 @@ implement, `get_absolute_url` and does not implement `get_search_result_url` the
 shown in the search results.
 
 If your model is a Django CMS Plugin instance, you probably want to implement `get_absolute_url()` and have it call
-`self.page.get_public_url()`. This convenient method handles translations and the situation where the plugin is not
-actually attached to a page.
+`self.page.get_public_url()`.
+
+```python
+def get_absolute_url(self) -> str:
+    try:
+        return self.page.get_public_url()
+    except AttributeError:
+        return ""
+```
 
 ### Pagination
 
