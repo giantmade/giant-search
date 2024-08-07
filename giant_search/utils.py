@@ -28,10 +28,28 @@ def is_cms_plugin(obj):
     return isinstance(obj, CMSPlugin)
 
 
-class SearchResultDeduplicator:
+class SearchResultProcessor:
     def __init__(self, queryset):
         self.queryset = queryset
         self.seen_urls = []
+
+    def process(self):
+        """
+        This method calls all of the processing methods that need to be run.
+        """
+
+        self.exclude_items_without_url()
+        self.deduplicate()
+        self.exclude_unpublished_items()
+
+        return self.queryset
+
+    def exclude_items_without_url(self):
+        """
+        Search Result items without a URL are pointless because there is nowhere for the user to go to.
+        """
+
+        self.queryset = self.queryset.exclude(url="")
 
     def deduplicate(self):
         """
@@ -47,7 +65,17 @@ class SearchResultDeduplicator:
             # Add the URL for this result to the seen URLs list so we don't add it again.
             self.seen_urls.append(url.strip("/"))
 
-        return self.queryset
+    def exclude_unpublished_items(self):
+        """
+        Remove any CMS Plugins attached to Pages that are not published.
+        """
+
+        queryset = self.queryset
+
+        for result in queryset:
+            if is_cms_plugin(result.object) and hasattr(result.object, "page"):
+                if not result.object.page.is_published(result.object.page.languages):
+                    self.queryset = self.queryset.exclude(pk=result.pk)
 
     def _is_valid_url(self, url):
         """
