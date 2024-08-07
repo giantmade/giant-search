@@ -16,3 +16,5 @@ local.db
 test.db
 *.sqlite
 .DS_Store
+poetry.lock
+dist/
