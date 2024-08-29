@@ -87,6 +87,8 @@ class SearchResultProcessor:
         if pks_to_exclude:
             self.queryset = self.queryset.exclude(pk__in=pks_to_exclude)
 
+        return self.queryset
+
     def _is_valid_url(self, url):
         """
         Ensures that the URL given is valid and has not already been processed.
