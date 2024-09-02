@@ -53,7 +53,6 @@ class SearchableMixin:
         By default, we attempt to call get_absolute_url on the object. If your model doesn't implement this method, or
         needs something more complex, you must override this property method.
         """
-
         try:
             return self.get_absolute_url()
         except AttributeError:

@@ -1,3 +1,4 @@
+from django.utils.translation import get_language
 from watson.search import register
 
 
@@ -67,15 +68,26 @@ class SearchResultProcessor:
 
     def exclude_unpublished_items(self):
         """
-        Remove any CMS Plugins attached to Pages that are not published.
+        Remove any CMS Plugins or Plugin Cards attached to Pages that are not published.
         """
 
         queryset = self.queryset
+        lang = get_language()
+        pks_to_exclude = []
 
         for result in queryset:
-            if is_cms_plugin(result.object) and hasattr(result.object, "page"):
-                if not result.object.page.is_published(result.object.page.languages):
-                    self.queryset = self.queryset.exclude(pk=result.pk)
+            plugin = None
+            if is_cms_plugin(result.object):
+                plugin = result.object
+            elif hasattr(result.object, "plugin") and is_cms_plugin(result.object.plugin):
+                plugin = result.object.plugin
+            if hasattr(plugin, "page") and not plugin.page.is_published(get_language()):
+                pks_to_exclude += [result.pk]
+
+        if pks_to_exclude:
+            self.queryset = self.queryset.exclude(pk__in=pks_to_exclude)
+
+        return self.queryset
 
     def _is_valid_url(self, url):
         """
