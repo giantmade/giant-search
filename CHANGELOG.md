@@ -1,3 +1,8 @@
+## 1.1.1
+### Changed
+- Plugins that are attached to plugins will now not show up in results if their parent plugin is attached to a page that
+is not published.
+
 ## 1.1.0
 ### Added
 - The `dist` directory is now excluded from Git so that build artefacts don't get included in version control.
