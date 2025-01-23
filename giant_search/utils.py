@@ -8,16 +8,25 @@ def register_for_search(model, **field_overrides):
     """
 
     from giant_search.adapter import GiantSearchAdapter
+
     register(model, adapter_cls=GiantSearchAdapter, **field_overrides)
 
 
-def is_page_title(obj):
+def is_cms_page(obj):
     """
-    Determine if the given object is a Django CMS Page Title model instance.
+    Determine if the given object is a Django CMS Page or Title model instance.
     """
 
-    from cms.models import Title
-    return isinstance(obj, Title)
+    try:
+        from cms.models import Title
+
+        page_model = Title
+    except ImportError:
+        from cms.models import PageContent
+
+        page_model = PageContent
+
+    return isinstance(obj, page_model)
 
 
 def is_cms_plugin(obj):
@@ -26,6 +35,7 @@ def is_cms_plugin(obj):
     """
 
     from cms.models import CMSPlugin
+
     return isinstance(obj, CMSPlugin)
 
 
@@ -79,7 +89,9 @@ class SearchResultProcessor:
             plugin = None
             if is_cms_plugin(result.object):
                 plugin = result.object
-            elif hasattr(result.object, "plugin") and is_cms_plugin(result.object.plugin):
+            elif hasattr(result.object, "plugin") and is_cms_plugin(
+                result.object.plugin
+            ):
                 plugin = result.object.plugin
             if hasattr(plugin, "page") and not plugin.page.is_published(get_language()):
                 pks_to_exclude += [result.pk]
