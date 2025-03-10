@@ -1,3 +1,8 @@
+## 1.1.3
+### Changed
+- fix Django dependency version
+- add general release notes
+
 ## 1.1.2
 ### Changed
   - Django-CMS 4 compatibility 
