@@ -1,3 +1,7 @@
+## 1.1.2
+### Changed
+  - Django-CMS 4 compatibility 
+
 ## 1.1.1
 ### Changed
 - Plugins that are attached to plugins will now not show up in results if their parent plugin is attached to a page that
