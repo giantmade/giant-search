@@ -152,3 +152,22 @@ This assumes your project has a registered simple_tag entitled `show_pagination`
 
 If implementing this library upon existing data, changes to search results will only take effect after the 
 model instance is saved again.
+
+## Package Publishing
+
+First build the package, 
+Do remmember to update the version number in pyproject and add the summary of changes to 
+   CHANGELOG.md
+
+```dotenv
+   $ poetry build
+```
+
+PyPi now prefers API Token authorisation. 
+```dotenv
+   $ poetry config pypi-token.pypi <token>
+```
+And finally
+```dotenv
+   $ poetry publish
+```
