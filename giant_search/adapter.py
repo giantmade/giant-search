@@ -5,7 +5,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import strip_tags
 from watson.search import SearchAdapter
 
-from giant_search.utils import is_page_title, is_cms_plugin
+from giant_search.utils import is_cms_page, is_cms_plugin
 
 
 @final
@@ -28,8 +28,8 @@ class GiantSearchAdapter(SearchAdapter):
         # As a starting point, use the model's string representation.
         title = str(obj)
 
-        # If the model is a Django CMS Page Title model use the title field.
-        if is_page_title(obj):
+        # If the model is a Django CMS Page model use the title field.
+        if is_cms_page(obj):
             title = obj.title
 
         # If the model is a Django CMS Plugin model, we can try to get the Page title.
@@ -56,8 +56,8 @@ class GiantSearchAdapter(SearchAdapter):
         it's excellent for providing a summary in your search results.
         """
 
-        if is_page_title(obj):
-            # If the object is a Page Title, return right away since it can't implement get_search_result_description.
+        if is_cms_page(obj):
+            # If the object is a Page, return right away since it can't implement get_search_result_description.
             return strip_tags(obj.meta_description) or ""
 
         try:
@@ -79,7 +79,7 @@ class GiantSearchAdapter(SearchAdapter):
             pass
 
         # If the model is a Django CMS Page Title model or a Plugin, try to get the URL from the Page.
-        if is_page_title(obj) or is_cms_plugin(obj):
+        if is_cms_page(obj) or is_cms_plugin(obj):
             try:
                 url = obj.page.get_absolute_url()
             except AttributeError:
@@ -104,7 +104,7 @@ class GiantSearchAdapter(SearchAdapter):
 
         category = ""
 
-        if is_page_title(obj):
+        if is_cms_page(obj):
             # If this Model is a Django CMS Title instance, we tell a lie and say that it is a Page because that makes
             # more sense for end users.
             category = "Page"

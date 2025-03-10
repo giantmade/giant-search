@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+
 from giant_search.utils import register_for_search
 
 
@@ -25,5 +26,17 @@ class GiantSearchAppConfig(AppConfig):
                     register_for_search(**register_kwargs)
 
         # Register Page Titles
-        from cms.models import Title
-        register_for_search(Title.objects.filter(published=True, publisher_is_draft=False))
+        try:
+            from cms.models import Title
+
+            register_for_search(
+                Title.objects.filter(published=True, publisher_is_draft=False)
+            )
+        except ImportError:
+            from cms.models import PageContent
+            from cms.utils import get_current_site
+            from cms.utils.i18n import get_public_languages
+
+            site = get_current_site()
+            languages = get_public_languages(site_id=site.pk)
+            register_for_search(PageContent.objects.filter(language__in=languages))
