@@ -164,7 +164,6 @@ Do remmember to update the version number in pyproject and add the summary of ch
 ```
 
 PyPi now prefers API Token authorisation. 
-If you have not set it you may find a token in  bitwarden.
 ```dotenv
    $ poetry config pypi-token.pypi <token>
 ```
