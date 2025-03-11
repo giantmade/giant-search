@@ -21,9 +21,11 @@ Install `giant-search` via your chosen Python dependency manager, `poetry`, `pip
 
 **Short version: you don't need to do anything.**
 
-The library will index all published `Title` objects. This allows end users to find pages via their title. This
-behaviour cannot currently be overridden, however in a future version, we might check if the Page has the NoIndex
-Page Extension and honour the setting within.
+The library will index all published `Title` objects, if using django-cms3, or `PageContent` if 
+using django- cms4. 
+This allows end users to find pages via their title.
+This behaviour cannot currently be overridden, however in a future version, we might check 
+if the Page has the NoIndex Page Extension and honour the setting within.
 
 ### Other models
 
