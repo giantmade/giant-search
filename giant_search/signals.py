@@ -38,11 +38,9 @@ def initial_connection_to_db(sender, **kwargs):
         from cms.models import Title
     except ImportError:
         from cms.models import PageContent
-        from cms.utils import get_current_site
         from cms.utils.i18n import get_public_languages
 
-        site = get_current_site()
-        languages = get_public_languages(site_id=site.pk)
+        languages = get_public_languages(site_id=settings)
         register_for_search(PageContent.objects.filter(language__in=languages))
     else:
         register_for_search(
