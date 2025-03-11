@@ -1,3 +1,9 @@
+## 1.1.4
+### Changed
+- delay DB access
+- preserve CMS3 compatibility
+- review README
+
 ## 1.1.3
 ### Changed
 - fix Django dependency version
