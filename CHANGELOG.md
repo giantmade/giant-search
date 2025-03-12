@@ -1,3 +1,7 @@
+## 1.1.5
+### Changed
+- prevent duplicate registration
+ 
 ## 1.1.4
 ### Changed
 - delay DB access

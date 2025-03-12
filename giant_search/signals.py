@@ -3,7 +3,9 @@ from importlib import import_module
 from django.apps import apps
 from django.conf import settings
 from django.db.backends.signals import connection_created
+from django.db.models import QuerySet
 from django.dispatch import receiver
+from watson.search import is_registered
 
 from giant_search.utils import register_for_search
 
@@ -14,7 +16,7 @@ db_backend = import_module(DB_ENGINE + ".base")
 
 @receiver(connection_created, sender=db_backend.DatabaseWrapper)
 def initial_connection_to_db(sender, **kwargs):
-    # Get a list of all models that implement the SearchableMixin?
+    # Get a list of all models that implement the SearchableMixin
     for app in apps.all_models.values():
         for model in app.values():
             if hasattr(model, "is_searchable"):
@@ -30,8 +32,12 @@ def initial_connection_to_db(sender, **kwargs):
                 except AttributeError:
                     pass
 
-                # Now we register this Model with the kwargs built up from above.
-                register_for_search(**register_kwargs)
+                # Do not register more than once:
+                model_ = register_kwargs['model']
+                if isinstance(model_, QuerySet):
+                    model_ = model_.model
+                if not is_registered(model_):
+                    register_for_search(**register_kwargs)
 
     # Register Page Titles / PageContents
     try:
@@ -41,9 +47,12 @@ def initial_connection_to_db(sender, **kwargs):
         from cms.utils.i18n import get_public_languages
 
         languages = get_public_languages(site_id=settings)
-        register_for_search(PageContent.objects.filter(language__in=languages))
+        model_ = PageContent
+        filters_ = {"language__in": languages}
     else:
-        register_for_search(
-            Title.objects.filter(published=True, publisher_is_draft=False)
-        )
+        model_ = Title
+        filters_ = {"published": True, "publisher_is_draft": False}
+
+    if not is_registered(model_):
+        register_for_search(model_.objects.filter(**filters_))
 
