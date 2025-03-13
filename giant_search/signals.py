@@ -47,12 +47,15 @@ def initial_connection_to_db(sender, **kwargs):
         from cms.utils.i18n import get_public_languages
 
         languages = get_public_languages(site_id=settings)
-        model_ = PageContent
-        filters_ = {"language__in": languages}
+        if not is_registered(PageContent):
+            qs = PageContent.objects.filter(language__in=languages)
+            # if qs.exists() and  hasattr(qs.first(), 'versions'):
+            #     qs.filter(versions__state='published')
+            register_for_search(qs)
     else:
-        model_ = Title
-        filters_ = {"published": True, "publisher_is_draft": False}
+        if not is_registered(Title):
+            register_for_search(
+                Title.objects.filter(published=True, publisher_is_draft=False)
+            )
 
-    if not is_registered(model_):
-        register_for_search(model_.objects.filter(**filters_))
 
