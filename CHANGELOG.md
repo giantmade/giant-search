@@ -1,3 +1,7 @@
+## 1.1.6
+### Changed
+- fix urls indexing
+
 ## 1.1.5
 ### Changed
 - prevent duplicate registration

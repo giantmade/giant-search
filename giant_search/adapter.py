@@ -11,10 +11,11 @@ from giant_search.utils import is_cms_page, is_cms_plugin
 @final
 class GiantSearchAdapter(SearchAdapter):
     """
-    This adapter allows us to define how we populate the title, description, URL and other fields on the Watson
-    SearchResult instances.
+    This adapter allows us to define how we populate the title, description,
+    URL and other fields on the Watson SearchResult instances.
 
-    Each method assumes that the model set on this Adapter class implements the SearchableMixin.
+    Each method assumes that the model set on this Adapter class implements the
+    SearchableMixin.
     """
 
     def get_title(self, obj):
@@ -22,7 +23,8 @@ class GiantSearchAdapter(SearchAdapter):
         Returns the title of this search result.
         This is given high priority in search result ranking.
 
-        You can access the title of the search entry as `entry.title` in your search results.
+        You can access the title of the search entry as `entry.title` in your search
+         results.
         """
 
         # As a starting point, use the model's string representation.
@@ -35,7 +37,7 @@ class GiantSearchAdapter(SearchAdapter):
         # If the model is a Django CMS Plugin model, we can try to get the Page title.
         if is_cms_plugin(obj):
             try:
-                title = obj.page.get_page_title()
+                title = obj.page.get_page_title(language=obj.language)
             except AttributeError:
                 pass
 
@@ -52,12 +54,13 @@ class GiantSearchAdapter(SearchAdapter):
         This is given medium priority in search result ranking.
 
         You can access the description of the search entry as `entry.description`
-        in your search results. Since this should contains a short description of the search entry,
-        it's excellent for providing a summary in your search results.
+        in your search results. Since this should contains a short description of the
+        search entry, it's excellent for providing a summary in your search results.
         """
 
         if is_cms_page(obj):
-            # If the object is a Page, return right away since it can't implement get_search_result_description.
+            # If the object is a Page, return right away since it can't implement
+            #  get_search_result_description.
             return strip_tags(obj.meta_description) or ""
 
         try:
@@ -78,14 +81,16 @@ class GiantSearchAdapter(SearchAdapter):
         except AttributeError:
             pass
 
-        # If the model is a Django CMS Page Title model or a Plugin, try to get the URL from the Page.
+        # If the model is a Django CMS Page Title model or a Plugin, try to get the URL
+        #   from the Page.
         if is_cms_page(obj) or is_cms_plugin(obj):
             try:
-                url = obj.page.get_absolute_url()
+                url = obj.page.get_absolute_url(language=obj.language)
             except AttributeError:
                 pass
 
-        # Finally, we check to see if the model has implemented get_search_result_url, and if so, use that.
+        # Finally, we check to see if the model has implemented get_search_result_url,
+        #  and if so, use that.
         try:
             url = obj.get_search_result_url()
         except AttributeError:
@@ -95,18 +100,19 @@ class GiantSearchAdapter(SearchAdapter):
 
     def serialize_meta(self, obj):
         """
-        Implement the serialize_meta method in order to get some useful information about our search result and put it
-        into the search result object for use on the front end.
+        Implement the serialize_meta method in order to get some useful information about
+         our search result and put it into the search result object for use on the
+         front end.
 
-        If you want to add some data here, please ensure that you update the SearchableMixin to provide a default
-        value for it.
+        If you want to add some data here, please ensure that you update the
+        SearchableMixin to provide a default value for it.
         """
 
         category = ""
 
         if is_cms_page(obj):
-            # If this Model is a Django CMS Title instance, we tell a lie and say that it is a Page because that makes
-            # more sense for end users.
+            # If this Model is a Django CMS Title instance, we tell a lie and say that it
+            # is a Page because that makes more sense for end users.
             category = "Page"
 
         try:
