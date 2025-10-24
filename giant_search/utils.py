@@ -93,7 +93,7 @@ class SearchResultProcessor:
                 result.object.plugin
             ):
                 plugin = result.object.plugin
-            if hasattr(plugin, "page") and not plugin.page.is_published(get_language()):
+            if hasattr(plugin, "page") and plugin.page and not plugin.page.is_published(get_language()):
                 pks_to_exclude += [result.pk]
 
         if pks_to_exclude:
