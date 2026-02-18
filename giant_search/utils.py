@@ -39,6 +39,24 @@ def is_cms_plugin(obj):
     return isinstance(obj, CMSPlugin)
 
 
+def is_page_published(page, language):
+    """
+    Check if a CMS Page is published for the given language.
+
+    CMS3 uses page.is_published(language).
+    CMS4 delegates publication to djangocms-versioning; the default
+    PageContent manager only returns published content, so we check
+    for the existence of a PageContent record.
+    """
+
+    if hasattr(page, "is_published"):
+        return page.is_published(language)
+
+    from cms.models import PageContent
+
+    return PageContent.objects.filter(page=page, language=language).exists()
+
+
 class SearchResultProcessor:
     def __init__(self, queryset):
         self.queryset = queryset
@@ -93,7 +111,7 @@ class SearchResultProcessor:
                 result.object.plugin
             ):
                 plugin = result.object.plugin
-            if hasattr(plugin, "page") and plugin.page and not plugin.page.is_published(get_language()):
+            if hasattr(plugin, "page") and plugin.page and not is_page_published(plugin.page, lang):
                 pks_to_exclude += [result.pk]
 
         if pks_to_exclude:
