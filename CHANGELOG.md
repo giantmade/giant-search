@@ -1,3 +1,7 @@
+## 1.2.0
+### Added
+- Update dependencies to support Django CMS 4.1+ and Python 3.10
+
 ## 1.1.8
 ### Fixed
 - fix `'Page' object has no attribute 'is_published'` error on CMS4 projects by replacing CMS3 `page.is_published()` call with a CMS3/CMS4 compatible helper
