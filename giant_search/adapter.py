@@ -96,7 +96,21 @@ class GiantSearchAdapter(SearchAdapter):
         except AttributeError:
             pass
 
-        return url
+        # watson stores this in a NOT NULL column, and every source above can
+        # legitimately yield None. Page.get_absolute_url() returns None whenever
+        # the page has no PageUrl row yet, which django-cms >= 5.1.1 made the
+        # normal case during page creation: cms.api.create_page_content() now
+        # creates that row *after* PageContent.objects.create() (5.1.0 created it
+        # before), and watson's post_save receiver indexes the content during
+        # that save. 5.1.1 also dropped the get_slug() fallback that used to
+        # paper over it. Without this coercion, creating any page raises
+        # `IntegrityError: NOT NULL constraint failed: watson_searchentry.url`.
+        #
+        # "" is the right value rather than a guess at the eventual URL: there is
+        # nowhere for a user to go yet, and SearchResultProcessor already drops
+        # url="" entries, so such content stays out of results until something
+        # re-indexes it with a real URL.
+        return url or ""
 
     def serialize_meta(self, obj):
         """
