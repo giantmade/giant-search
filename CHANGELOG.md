@@ -1,3 +1,8 @@
+## 1.2.1
+### Changed
+- Fix NULL search entry URL on django-cms 5.1.1
+- Update project authors
+
 ## 1.2.0
 ### Added
 - Update dependencies to support Django CMS 4.1+ and Python 3.10
