@@ -1,10 +1,16 @@
 [tool.poetry]
 name = "giant-search"
-version = "1.2.0"
+version = "1.2.1"
 description = "Provides a nice abstraction layer on top of the django-watson search library."
 authors = [
-    "Scott Pashley <scott.pashley@giantdigital.co.uk>",
-    "Ricardo Mendonca <ricardo.mendonca@giantdigital.co.uk>",
+    {name = "Jon Atkinson", email = "jon.atkinson@giantdigital.co.uk"},
+    {name = "Peter Smith-Keary", email = "peter.smith-keary@giantdigital.co.uk"},
+    {name = "Wayne Fagin", email = "wayne.fagin@giantdigital.co.uk"},
+    {name = "Tom Bannister", email = "tom.bannister@giantdigital.co.uk"},
+    {name = "Will Hoey", email = "will.hoey@giantdigital.co.uk"},
+    {name = "Jake Quirke", email = "jake.quirke@giantdigital.co.uk"},
+    {name = "Karl Swatman", email = "karl.swatman@giantdigital.co.uk"},
+    {name = "Rob Tagg", email = "rob.tagg@giantdigital.co.uk"},
 ]
 readme = "README.md"
 packages = [{ include = "giant_search" }]
