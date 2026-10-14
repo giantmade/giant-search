@@ -3,14 +3,14 @@ name = "giant-search"
 version = "1.2.1"
 description = "Provides a nice abstraction layer on top of the django-watson search library."
 authors = [
-    {name = "Jon Atkinson", email = "jon.atkinson@giantdigital.co.uk"},
-    {name = "Peter Smith-Keary", email = "peter.smith-keary@giantdigital.co.uk"},
-    {name = "Wayne Fagin", email = "wayne.fagin@giantdigital.co.uk"},
-    {name = "Tom Bannister", email = "tom.bannister@giantdigital.co.uk"},
-    {name = "Will Hoey", email = "will.hoey@giantdigital.co.uk"},
-    {name = "Jake Quirke", email = "jake.quirke@giantdigital.co.uk"},
-    {name = "Karl Swatman", email = "karl.swatman@giantdigital.co.uk"},
-    {name = "Rob Tagg", email = "rob.tagg@giantdigital.co.uk"},
+    "Jon Atkinson <jon.atkinson@giantdigital.co.uk>",
+    "Peter Smith-Keary <peter.smith-keary@giantdigital.co.uk>",
+    "Wayne Fagin <wayne.fagin@giantdigital.co.uk>",
+    "Tom Bannister <tom.bannister@giantdigital.co.uk>",
+    "Will Hoey <will.hoey@giantdigital.co.uk>",
+    "Jake Quirke <jake.quirke@giantdigital.co.uk>",
+    "Karl Swatman <karl.swatman@giantdigital.co.uk>",
+    "Rob Tagg <rob.tagg@giantdigital.co.uk>",
 ]
 readme = "README.md"
 packages = [{ include = "giant_search" }]
